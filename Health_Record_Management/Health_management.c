@@ -26,8 +26,9 @@ void saveToFile(struct Patient p) {
     }
     fprintf(fp, "Name: %s | Age: %d | Disease: %s | Phone: %s\n",
             p.name, p.age, p.disease, p.phone);
+    fflush(fp);   // force writing immediately
     fclose(fp);
-    printf("✔ Record also written to notes.txt\n");  // Debug message
+    printf("Record also written to notes.txt\n");  // Debug message
 }
 
 int main() {
