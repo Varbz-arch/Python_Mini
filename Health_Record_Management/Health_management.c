@@ -9,15 +9,18 @@ struct Patient {
     char disease[50];
     char phone[15];
 };
+
+// Validate phone number (must be exactly 10 digits)
 int isValidPhone(char phone[]) {
     int len = strlen(phone);
     if (len != 10) return 0;  
-
     for (int i = 0; i < len; i++) {
         if (!isdigit(phone[i])) return 0;  
     }
     return 1;
 }
+
+// Save a patient record to notes.txt
 void saveToFile(struct Patient p) {
     FILE *fp = fopen("notes.txt", "a");
     if (fp == NULL) {
@@ -26,9 +29,8 @@ void saveToFile(struct Patient p) {
     }
     fprintf(fp, "Name: %s | Age: %d | Disease: %s | Phone: %s\n",
             p.name, p.age, p.disease, p.phone);
-    fflush(fp);   // force writing immediately
     fclose(fp);
-    printf("Record also written to notes.txt\n");  // Debug message
+    printf("✔ Record also written to notes.txt\n");
 }
 
 int main() {
@@ -42,7 +44,7 @@ int main() {
         printf("3. Exit\n");
         printf("Enter choice: ");
         scanf("%d", &choice);
-        getchar();  // clear newline from buffer
+        getchar();  // clear newline
 
         if (choice == 1) {
             if (count < MAX) {
@@ -66,14 +68,16 @@ int main() {
                     if (isValidPhone(patients[count].phone)) {
                         break; 
                     } else {
-                        printf("Invalid phone number! Please enter exactly 10 digits.\n");
+                        printf("❌ Invalid phone number! Please enter exactly 10 digits.\n");
                     }
                 }
 
+                saveToFile(patients[count]);   // ✅ write to file
                 count++;
-                printf("Record added successfully!\n");
+                printf("✔ Record added successfully!\n");
+
             } else {
-                printf("Record limit reached.\n");
+                printf("⚠ Record limit reached.\n");
             }
         } 
         else if (choice == 2) {
@@ -87,7 +91,7 @@ int main() {
         } 
         else if (choice == 3) {
             printf("Exiting... Stay Healthy!\n");
-            break;
+            break;   // ✅ now works, since we are inside while loop
         } 
         else {
             printf("Invalid choice. Try again.\n");
