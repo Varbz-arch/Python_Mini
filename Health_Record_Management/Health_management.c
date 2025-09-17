@@ -18,6 +18,17 @@ int isValidPhone(char phone[]) {
     }
     return 1;
 }
+void saveToFile(struct Patient p) {
+    FILE *fp = fopen("notes.txt", "a");
+    if (fp == NULL) {
+        printf("Error opening file!\n");
+        return;
+    }
+    fprintf(fp, "Name: %s | Age: %d | Disease: %s | Phone: %s\n",
+            p.name, p.age, p.disease, p.phone);
+    fclose(fp);
+    printf("✔ Record also written to notes.txt\n");  // Debug message
+}
 
 int main() {
     struct Patient patients[MAX];
